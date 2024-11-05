@@ -1,0 +1,9 @@
+Listen 4444
+<VirtualHost *:4444>
+	ServerAdmin webmaster@localhost
+	DocumentRoot /var/www/html{{ play_hosts.index(inventory_hostname) }}
+
+	ErrorLog ${APACHE_LOG_DIR}/error{{ play_hosts.index(inventory_hostname) }}.log
+	CustomLog ${APACHE_LOG_DIR}/access{{ play_hosts.index(inventory_hostname) }}.log combined
+
+</VirtualHost>

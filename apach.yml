@@ -1,0 +1,16 @@
+---
+- name: Install apache
+  hosts:
+    - base-project-mysql-master
+    - base-project-mysql-slave
+  become: true
+  tasks:
+  - name: Install apache
+    apt:
+      name: apache2
+      state: present
+  - name: Enable apache
+    systemd:
+      name: apache2
+      state: restarted
+      enabled: yes

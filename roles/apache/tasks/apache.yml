@@ -1,0 +1,55 @@
+---
+
+- name: Install apache
+  apt:
+    name: apache2
+    state: present
+#  notify: Restart apache
+  tags: apache
+
+- name: Remove default apache configuration
+  file:
+    name: '{{ item }}'
+    state: absent
+  loop:
+    - /etc/apache2/sites-available/000-default.conf
+    - /etc/apache2/sites-enabled/000-default.conf
+ #   - 000-default.conf
+  tags: apache
+
+- name: Update the apache config file
+  ansible.builtin.template:
+    src: ./templates/sites-enabled-default.conf.j2
+    dest: "/etc/apache2/sites-enabled/{{ play_hosts.index(inventory_hostname) }}.conf"
+    mode: 0644
+    owner: root
+    group: root
+  tags: apache
+
+- name: Update the apache port config file
+  ansible.builtin.template:
+    src: ./templates/ports.conf.j2
+    dest: /etc/apache2/ports.conf
+    mode: 0644
+    owner: root
+    group: root
+#  notify: Restart apache
+  tags: apache
+
+- name: Re-create the directory
+  file:
+    state: directory
+    path: "/var/www/html{{ play_hosts.index(inventory_hostname) }}"
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Add html file
+  ansible.builtin.template:
+    src: ./templates/index.html.j2
+    dest: "/var/www/html{{ play_hosts.index(inventory_hostname) }}/index.html"
+    mode: 0644
+    owner: root
+    group: root
+  notify: Restart apache
+  tags: apache

@@ -1,0 +1,21 @@
+---
+
+- name: MAIN
+  hosts: front
+  become: true
+  roles:
+    - common
+
+- name: Mysql-master
+  hosts: mysql-master
+  become: true
+  roles:
+    - common
+    - nginx
+    - apache
+
+- name: Mysql-slave
+  hosts: mysql-slave
+  become: true
+  roles:
+    - apache

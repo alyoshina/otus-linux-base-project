@@ -1,0 +1,28 @@
+---
+
+- name: Install nginx
+  apt:
+    name: nginx
+    state: present
+  notify: Restart nginx
+  tags: nginx
+
+- name: Remove default nginx configuration
+  file:
+    name: '{{ item }}'
+    state: absent
+  loop:
+    - /etc/nginx/sites-available/default
+    - /etc/nginx/sites-enabled/default
+  tags: nginx
+
+- name: Update the nginx config file
+  ansible.builtin.template:
+    src: ./templates/sites-enabled-default.conf.j2
+    dest: /etc/nginx/sites-enabled/default
+    mode: 0644
+    owner: root
+    group: root
+  notify: Restart nginx
+  tags: nginx
+
