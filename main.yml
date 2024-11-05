@@ -1,7 +1,7 @@
 ---
 
 - name: MAIN
-  hosts: front
+  hosts: nginx
   become: true
   roles:
     - common

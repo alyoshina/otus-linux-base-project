@@ -1,0 +1,14 @@
+---
+- name: Set authorized key
+  ansible.posix.authorized_key:
+    user: "{{ ansible_ssh_user }}"
+    state: present
+    key: "{{ lookup('file', '/home/{{ ansible_ssh_user }}/.ssh/id_rsa.pub') }}"
+
+# - name: Ssh keygen
+#   become: true
+#   hosts: log
+#   tasks:
+#     - name: Create ssh key
+#       openssh_keypair:
+#         type: rsa
