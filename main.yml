@@ -1,22 +1,24 @@
 ---
 
-- name: MAIN
-  hosts: nginx
-  become: true
-  roles:
-    - common
-    - nginx
+# - name: MAIN
+#   hosts: nginx
+#   become: true
+#   roles:
+#     - common
+#     - nginx
 
-- name: Mysql-master
-  hosts: mysql-master
-  become: true
-  roles:
-    - common
-    
-    - apache
+# - name: Mysql-master
+#   hosts: mysql-master
+#   become: true
+#   roles:
+#     - common
+#   #  - apache
+#     - mysql-master
 
 - name: Mysql-slave
   hosts: mysql-slave
   become: true
   roles:
-    - apache
+    - common
+  #  - apache
+    - mysql-slave

@@ -1,0 +1,5 @@
+---
+# tasks file for mysql-master
+- name: Mysql-master
+  import_tasks: mysql-master.yml
+

@@ -1,0 +1,51 @@
+---
+
+- name: "Install mysql {{ inventory_hostname }}"
+  apt:
+    name: mysql-server-8.0
+    state: present
+  notify: Restart mysql-slave
+  tags: mysql-slave
+
+- name: "Install ansible python3 mysql dependency"
+  apt:
+    name: python3-mysqldb
+    state: latest
+
+- name: Remove default mysql configuration
+  file:
+    name: '{{ item }}'
+    state: absent
+  loop:
+    - /etc/mysql/mysql.conf.d/mysqld.cnf
+  tags: mysql-slave
+
+- name: Update mysql config file
+  ansible.builtin.template:
+    src: ./templates/mysqldslave.cnf.j2
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    mode: 0644
+    owner: root
+    group: root
+  notify: Restart mysql-slave
+  tags: mysql-slave
+
+- name: Stop mysql replica thread
+  mysql_replication:
+    mode: stopslave #stopreplica
+    login_unix_socket: /run/mysqld/mysqld.sock
+
+# - name: "Change replication source to replica server {{ hostvars['mysql-master']['ansible_host'] }}"
+#   mysql_replication:
+#     mode: changemaster #changereplication
+#     master_host: "{{ hostvars['mysql-master']['ansible_host'] }}"
+#     master_user: "{{ mysql_repl_user }}"
+#     master_password: "{{ mysql_root_password }}"
+# #      master_log_file: mysql-bin.000009
+#     master_auto_position: 1
+# #      master_log_pos: 1
+
+- name: Start mysql replica thread
+  mysql_replication:
+    mode: startslave #startreplica
+    login_unix_socket: /run/mysqld/mysqld.sock

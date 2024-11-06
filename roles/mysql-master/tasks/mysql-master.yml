@@ -1,0 +1,146 @@
+---
+
+- name: "Install mysql {{ inventory_hostname }}"
+  apt:
+    name: mysql-server-8.0
+    state: present
+  notify: Restart mysql-master
+  tags: mysql-master
+
+- name: "Install ansible python3 mysql dependency"
+  apt:
+    name: python3-mysqldb
+    state: latest
+
+- name: Remove default mysql configuration
+  file:
+    name: '{{ item }}'
+    state: absent
+  loop:
+    - /etc/mysql/mysql.conf.d/mysqld.cnf
+  tags: mysql
+
+- name: Update mysql config file
+  ansible.builtin.template:
+    src: ./templates/mysqld.cnf.j2
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    mode: 0644
+    owner: root
+    group: root
+  notify: Restart mysql-master
+  tags: mysql
+
+# - name: Update mysql root user password
+#   mysql_user:
+#     login_user: root
+#     login_password: ''
+#     name: root
+#     host_all: yes
+#     password: "{{ mysql_root_password }}"
+# #    plugin: caching_sha2_password
+
+- name: "Create {{ mysql_repl_user }} user"
+  mysql_user: 
+    login_user: root
+    login_password: "{{ mysql_root_password }}" 
+    name: "{{ mysql_repl_user }}"
+    password: "{{ mysql_root_password }}" 
+    host: "%" 
+    state: present
+    plugin: caching_sha2_password
+    priv: "*.*:REPLICATION SLAVE"
+
+
+
+#    login_host: 'localhost'
+#    login_port: 3306 
+  #  host: "%" 
+  #  state: present
+  #  plugin: caching_sha2_password
+# - name: Create user
+#   - mysql_user: 
+#       priv: >-
+#         {{ item.name | regex_replace ('[.-]', '_') }}.*:ALL/ 
+#         *.*:PROCESS 
+#       login_host: localhost
+#       login_port: 3306 
+#       login_user: "{{ mysql_root_user }}" 
+#       login_password: "{{ mysql_root_password }}" 
+#       name: "{{ item.user }}" 
+#       password: "{{ item.password }}" 
+#       host: "%" 
+#       state: present
+#     loop: 
+#       - name: "{{ dbname }}"
+#         user: test
+#         password: "{{ mysql_root_password }}"
+
+    # vars: 
+    #   mysql_root_user: root
+    #   mysql_root_password: root
+    #   mysql:
+    #     endpoint:
+    #       address: mysql
+
+
+# - name: Update mysql root password
+#   mysql_user:
+#     name: root
+#     host: "{{ item }}"
+#     password: "{{ mysql_root_password }}"
+#     login_user: root
+#     login_password: "{{ mysql_root_password }}"
+#     check_implicit_admin: yes
+#     #priv: "*.*.ALL,GRANT"
+#     #encrypted: "
+#     plugin: caching_sha2_password
+#   with_items:
+#     #- "{{ ansible_hostname }}"
+#     #- 127.0.0.1
+#     #- ::1
+#     - localhost
+    
+
+
+# - name: Create database
+#   mysql_db:
+#     name: "{{ dbname }}"
+#     state: present
+#     login_user: root
+#     login_password: "{{ mysql_root_password }}"
+
+# - name: Copy dump
+#   copy:
+#     src: dump.sql
+#     dest: /tmp/dump.sql
+
+# - name: Restore database from dump
+#   mysql_db:
+#     name: "{{ dbname }}"
+#     state: import
+#     target: /tmp/dump.sql
+#     login_user: root
+#     login_password: "{{ mysql_root_password }}"
+
+
+
+
+# - name: Remove default nginx configuration
+#   file:
+#     name: '{{ item }}'
+#     state: absent
+#   loop:
+#     - /etc/nginx/sites-available/default
+#     - /etc/nginx/sites-enabled/default
+#   tags: nginx
+
+# - name: Update the nginx config file
+#   ansible.builtin.template:
+#     src: ./templates/sites-enabled-default.conf.j2
+#     dest: /etc/nginx/sites-enabled/default
+#     mode: 0644
+#     owner: root
+#     group: root
+#   notify: Restart nginx
+#   tags: nginx
+

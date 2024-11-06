@@ -1,4 +1,5 @@
 ---
-# tasks file for nginx
+# tasks file for mysql-slave
+
 - name: Mysql-slave
   import_tasks: mysql-slave.yml

@@ -1,0 +1,8 @@
+---
+# vars file for mysql-master
+
+mysql_daemon: mysql
+dbname: testdb
+mysql_root_user: root
+mysql_root_password: liliya
+mysql_repl_user: repl

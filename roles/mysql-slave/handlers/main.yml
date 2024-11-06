@@ -1,0 +1,14 @@
+---
+# handlers file for mysql-slave
+
+- name: Enable mysql-slave
+  service:
+    name: "{{ mysql_daemon }}"
+    state: started
+    enabled: true
+
+- name: Restart mysql-slave
+  service:
+    name: "{{ mysql_daemon }}"
+    state: restarted
+
