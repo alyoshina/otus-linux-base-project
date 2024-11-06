@@ -1,9 +1,9 @@
 ---
-- name: Set authorized key
-  ansible.posix.authorized_key:
-    user: "{{ ansible_ssh_user }}"
-    state: present
-    key: "{{ lookup('file', '/home/{{ ansible_ssh_user }}/.ssh/id_rsa.pub') }}"
+# - name: Set authorized key
+#   ansible.posix.authorized_key:
+#     user: "{{ ansible_ssh_user }}"
+#     state: present
+#     key: "{{ lookup('file', '/home/{{ ansible_ssh_user }}/.ssh/id_rsa.pub') }}"
 
 # - name: Ssh keygen
 #   become: true
@@ -12,3 +12,70 @@
 #     - name: Create ssh key
 #       openssh_keypair:
 #         type: rsa
+
+# - name: Ssh keygen
+#   hosts: localhost
+#   become: true
+#   tasks:
+#     - name: Public key
+#       openssh_keypair:
+#         user: "{{ ansible_ssh_user }}"
+# #      community.crypto.openssh_keypair:
+#  #       group: "{{ ansible_ssh_user }}"
+# #        owner: "{{ ansible_ssh_user }}"
+# #        path: "/home/{{ ansible_ssh_user }}/.ssh"
+#         path: "~/.ssh/{{ ansible_facts.hostname }}"
+# #        state: present 
+#         type: rsa
+#         force: yes
+#       register: ssh_key
+
+#     - name: debug
+#       debug:
+#         msg: "{{ ssh_key }}"
+
+#     - name: Set authorized key taken from file
+#       ansible.posix.authorized_key:
+#         user: "{{ ansible_ssh_user }}"
+#         state: present
+#         key: "{{ lookup('file', '~/.ssh/{{ ansible_facts.hostname }}.pub') }}"
+#     # - name: Store public key into origin
+#     #   delegate_to: nginx
+#     #   authorized_key:
+#     #     key: "{{ ssh_key.public_key }}"
+#     #     comment: "{{ ansible_hostname }}"
+#     #     user: "{{ ansible_ssh_user }}"
+
+
+
+
+- name: Ssh keygen
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Public key
+      openssh_keypair:
+        group: root
+        owner: root
+        path: "~/.ssh/{{ ansible_facts.hostname }}"
+        type: rsa
+        force: yes
+      register: ssh_key
+
+    # - name: debug
+    #   debug:
+    #     msg: "{{ ssh_key }}"
+
+    - name: Set authorized key taken from file
+      delegate_to: mysql-master
+      authorized_key:
+        user: "{{ ansible_ssh_user }}"
+        #state: present
+        key: "{{ ssh_key.public_key }}"
+        comment: "{{ ansible_hostname }}"
+    # - name: Store public key into origin
+    #   delegate_to: nginx
+    #   authorized_key:
+    #     key: "{{ ssh_key.public_key }}"
+    #     comment: "{{ ansible_hostname }}"
+    #     user: "{{ ansible_ssh_user }}"
