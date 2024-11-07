@@ -1,0 +1,19 @@
+---
+
+- name: Remove default mysql configuration
+  file:
+    name: '{{ item }}'
+    state: absent
+  loop:
+    - /etc/mysql/mysql.conf.d/mysqld.cnf
+  tags: mysql-slave
+
+- name: Update mysql config file
+  ansible.builtin.template:
+    src: ./templates/mysqldslave.cnf.j2
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    mode: 0644
+    owner: root
+    group: root
+  notify: Restart mysql-slave
+  tags: mysql-slave

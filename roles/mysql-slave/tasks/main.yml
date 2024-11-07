@@ -2,4 +2,8 @@
 # tasks file for mysql-slave
 
 - name: Mysql-slave
-  import_tasks: mysql-slave.yml
+  import_tasks: 
+    - install.yml
+    - configuration.yml
+    - update-root-password.yml
+    - change-replica-source.yml
