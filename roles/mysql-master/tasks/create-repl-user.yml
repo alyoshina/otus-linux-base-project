@@ -61,11 +61,6 @@
     #plugin: caching_sha2_password
     priv: "*.*:REPLICATION CLIENT,PROCESS,SELECT"
 
-$ mysql -u root -p
-	CREATE USER 'mysqld_exporter'@'localhost' IDENTIFIED BY 'StrongPassword';
-	GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'mysqld_exporter'@'localhost';
-	FLUSH PRIVILEGES;
-	EXIT
 
 
 #    login_host: 'localhost'

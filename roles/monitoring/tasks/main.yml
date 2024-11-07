@@ -6,6 +6,9 @@
 
 - import_tasks: prometheus_exporter.yml
 
+- import_tasks: mysqld-exporter.yml
+  when: "'mysqld' in prometheus_exporter_types"
+
 - import_tasks: grafana.yml
   when: inventory_hostname == 'monitoring'
   

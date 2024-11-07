@@ -1,0 +1,23 @@
+---
+
+- name: Create mysqld-exporter.cnf
+  ansible.builtin.template:
+    src: ./templates/mysqld_exporter.cnf.j2
+    dest: /etc/.mysqld_exporter.cnf
+    mode: 0644
+    owner: root
+    group: prometheus
+
+- name: Create prometheus-mysqld-exporter.service
+  ansible.builtin.template:
+    src: ./templates/prometheus-mysqld-exporter.service.j2
+    dest: /lib/systemd/system/prometheus-mysqld-exporter.service
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Restart prometheus-mysqld-exporter.service, in all cases, also issue daemon-reload to pick up config changes
+  systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: prometheus-mysqld-exporter.service

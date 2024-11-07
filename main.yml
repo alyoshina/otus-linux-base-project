@@ -15,11 +15,12 @@
   become: true
   roles:
     - common
+    - mysql-master
     - role: monitoring
       vars:
         prometheus_exporter_types: [mysqld, node] 
     - apache
-    - mysql-master
+
 
 - name: Mysql-slave
   hosts: mysql_slave
