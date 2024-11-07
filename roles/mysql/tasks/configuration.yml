@@ -8,7 +8,7 @@
     - /etc/mysql/mysql.conf.d/mysqld.cnf
   tags: mysql
 
-- name: Update mysql config file
+- name: Update mysql-master config file
   ansible.builtin.template:
     src: ./templates/mysqld.cnf.j2
     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -16,10 +16,10 @@
     owner: root
     group: root
   notify: Restart mysql
-  when: mysql_type == master
+  when: mysql_type == 'master'
   tags: mysql
 
-- name: Update mysql config file
+- name: Update mysql-slave config file
   ansible.builtin.template:
     src: ./templates/mysqldslave.cnf.j2
     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -27,6 +27,6 @@
     owner: root
     group: root
   notify: Restart mysql
-  when: mysql_type == slave
+  when: mysql_type == 'slave'
   tags: mysql
 
