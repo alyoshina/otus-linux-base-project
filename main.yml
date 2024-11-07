@@ -7,13 +7,13 @@
 #     - common
 #     - nginx
 
-# - name: Mysql-master
-#   hosts: mysql_master
-#   become: true
-#   roles:
-#     - common
-#   #  - apache
-#     - mysql-master
+- name: Mysql-master
+  hosts: mysql_master
+  become: true
+  roles:
+    - common
+  #  - apache
+    - mysql-master
 
 - name: Mysql-slave
   hosts: mysql_slave

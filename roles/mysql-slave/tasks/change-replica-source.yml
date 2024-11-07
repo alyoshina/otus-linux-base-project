@@ -16,7 +16,7 @@
 #     primary_auto_position: 1
 # #      master_log_pos: 1
 
-- name: "Change replica source to get_source_public_key=1"
+- name: "Change replica source with get_source_public_key=1"
   ansible.builtin.command: 'mysql -p"{{ mysql_root_password }}" -NBe "{{ item }}"'
   with_items:
     - change replication source to source_host='{{ hostvars.mysql_master.ansible_host }}', source_user='{{ mysql_repl_user }}', source_password='{{ mysql_root_password }}', source_auto_position=1, get_source_public_key=1

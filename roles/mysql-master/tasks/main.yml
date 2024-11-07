@@ -1,5 +1,5 @@
 ---
 # tasks file for mysql-master
 - name: Mysql-master
-  import_tasks: mysql-master.yml
+  import_tasks: create-repl-user.yml
 

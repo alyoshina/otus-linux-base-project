@@ -1,43 +1,43 @@
 ---
 
-- name: "Install mysql {{ inventory_hostname }}"
-  apt:
-    name: mysql-server-8.0
-    state: present
-  notify: Restart mysql-master
-  tags: mysql-master
+# - name: "Install mysql {{ inventory_hostname }}"
+#   apt:
+#     name: mysql-server-8.0
+#     state: present
+#   notify: Restart mysql-master
+#   tags: mysql-master
 
-- name: "Install ansible python3 mysql dependency"
-  apt:
-    name: python3-mysqldb
-    state: latest
+# - name: "Install ansible python3 mysql dependency"
+#   apt:
+#     name: python3-mysqldb
+#     state: latest
 
-- name: Remove default mysql configuration
-  file:
-    name: '{{ item }}'
-    state: absent
-  loop:
-    - /etc/mysql/mysql.conf.d/mysqld.cnf
-  tags: mysql
+# - name: Remove default mysql configuration
+#   file:
+#     name: '{{ item }}'
+#     state: absent
+#   loop:
+#     - /etc/mysql/mysql.conf.d/mysqld.cnf
+#   tags: mysql
 
-- name: Update mysql config file
-  ansible.builtin.template:
-    src: ./templates/mysqld.cnf.j2
-    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
-    mode: 0644
-    owner: root
-    group: root
-  notify: Restart mysql-master
-  tags: mysql
+# - name: Update mysql config file
+#   ansible.builtin.template:
+#     src: ./templates/mysqld.cnf.j2
+#     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+#     mode: 0644
+#     owner: root
+#     group: root
+#   notify: Restart mysql-master
+#   tags: mysql
 
-- name: Update mysql root user password
-  mysql_user:
-    login_user: root
-    login_password: ''
-    name: root
-    host_all: yes
-    password: "{{ mysql_root_password }}"
-#    plugin: caching_sha2_password
+# - name: Update mysql root user password
+#   mysql_user:
+#     login_user: root
+#     login_password: ''
+#     name: root
+#     host_all: yes
+#     password: "{{ mysql_root_password }}"
+# #    plugin: caching_sha2_password
 
 - name: "Create {{ mysql_repl_user }} user"
   mysql_user: 

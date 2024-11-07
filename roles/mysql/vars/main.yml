@@ -1,9 +1,9 @@
 ---
-# vars file for mysql-master
+# vars file for mysql
 
 mysql_daemon: mysql
 dbname: testdb
 mysql_root_user: root
 mysql_root_password: liliya
 mysql_repl_user: repl
-
+mysql_type: master
