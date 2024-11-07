@@ -11,7 +11,8 @@
 
 - name: Copy grafana_11.22.2
   copy:
-    src: files/grafana_11.2.2_amd64-224190-c9d6aa.deb
+    #src: files/grafana_11.2.2_amd64-224190-c9d6aa.deb
+    src: /home/liliya/grafana_11.2.2_amd64-224190-c9d6aa.deb
     dest: /tmp/grafana_11.2.2_amd64-224190-c9d6aa.deb
 
 - name: Install a grafana.deb package

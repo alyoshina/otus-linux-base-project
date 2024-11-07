@@ -30,7 +30,6 @@ group_prometheus_node_exporter:
 group_prometheus_mysql_exporter:
   hosts:
     mysql_master:
-    mysql_slave:
 
 group_prometheus_nginx_exporter:
   hosts:

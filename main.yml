@@ -10,27 +10,27 @@
       vars:
         prometheus_exporter_types: [nginx, node] 
 
-# - name: Mysql-master
-#   hosts: mysql_master
-#   become: true
-#   roles:
-#     - common
-#     - role: monitoring
-#       vars:
-#         prometheus_exporter_types: [mysqld, nginx, node] 
-#   #  - apache
-#   #  - mysql-master
+- name: Mysql-master
+  hosts: mysql_master
+  become: true
+  roles:
+    - common
+    - role: monitoring
+      vars:
+        prometheus_exporter_types: [mysqld, node] 
+    - apache
+    - mysql-master
 
-# - name: Mysql-slave
-#   hosts: mysql_slave
-#   become: true
-#   roles:
-#     - common
-#     - role: monitoring
-#       vars:
-#         prometheus_exporter_types: [mysqld, node] 
-#   #  - apache
-#   #  - mysql-slave
+- name: Mysql-slave
+  hosts: mysql_slave
+  become: true
+  roles:
+    - common
+    - role: monitoring
+      vars:
+        prometheus_exporter_types: [node] 
+    - apache
+    - mysql-slave
 
 - name: Monitoring
   hosts: monitoring

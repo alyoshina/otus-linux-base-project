@@ -45,9 +45,15 @@ scrape_configs:
 {% for host in groups['group_prometheus_node_exporter'] %}
         - {{ hostvars[host]['ansible_host'] }}:{{ node_exporter_port }}
 {% endfor %}
+  - job_name: mysql_server1
+    static_configs:
 {% for host in groups['group_prometheus_mysql_exporter'] %}
         - {{ hostvars[host]['ansible_host'] }}:{{ mysql_exporter_port }}
+          labels:
+            alias: db1
 {% endfor %}
+  - job_name: nginx
+    static_configs:
 {% for host in groups['group_prometheus_nginx_exporter'] %}
         - {{ hostvars[host]['ansible_host'] }}:{{ nginx_exporter_port }}
 {% endfor %}
