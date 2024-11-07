@@ -1,0 +1,28 @@
+---
+
+- name: "Install prometheus {{ inventory_hostname }}"
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - prometheus
+
+- name: Remove default prometheus configuration
+  file:
+    name: '{{ item }}'
+    state: absent
+  loop:
+    - /etc/prometheus/prometheus.yml
+
+- name: Update prometheus config file
+  ansible.builtin.template:
+    src: ./templates/prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Restart prometheus
+  service:
+    name: prometheus
+    state: restarted

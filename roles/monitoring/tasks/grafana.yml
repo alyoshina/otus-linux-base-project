@@ -1,0 +1,41 @@
+---
+
+- name: "Install grafana {{ inventory_hostname }}"
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - adduser
+    - libfontconfig1
+    - musl
+
+- name: Copy grafana_11.22.2
+  copy:
+    src: files/grafana_11.2.2_amd64-224190-c9d6aa.deb
+    dest: /tmp/grafana_11.2.2_amd64-224190-c9d6aa.deb
+
+- name: Install a grafana.deb package
+  apt:
+    deb: /tmp/grafana_11.2.2_amd64-224190-c9d6aa.deb
+
+- name: Restart service grafana, in all cases, also issue daemon-reload to pick up config changes
+  systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: grafana-server
+
+# - name: Remove default prometheus configuration
+#   file:
+#     name: '{{ item }}'
+#     state: absent
+#   loop:
+#     - /etc/prometheus/prometheus.yml
+
+# - name: Update prometheus config file
+#   ansible.builtin.template:
+#     src: ./templates/prometheus.yml.j2
+#     dest: /etc/prometheus/prometheus.yml
+#     mode: 0644
+#     owner: root
+#     group: root
+

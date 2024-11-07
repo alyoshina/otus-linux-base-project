@@ -1,0 +1,7 @@
+---
+
+- name: "Install prometheus-{{ item }}-exporter {{ inventory_hostname }}"
+  apt:
+    name: "prometheus-{{ item }}-exporter"
+    state: present
+  loop: "{{ prometheus_exporter_types }}"

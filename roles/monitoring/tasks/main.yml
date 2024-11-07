@@ -1,0 +1,22 @@
+---
+# tasks file for monitoring
+
+- import_tasks: prometheus.yml
+  when: inventory_hostname == 'monitoring'
+
+- import_tasks: prometheus_exporter.yml
+
+- import_tasks: grafana.yml
+  when: inventory_hostname == 'monitoring'
+  
+# - name: test0
+#   debug:
+#     msg: "1) {{ inventory_hostname }}"
+
+# - name: test1
+#   debug:
+#     msg: "1) {{ hostvars['{{ inventory_hostname }}'].ansible_host }}"
+# - name: test2
+#   debug:
+#     msg: "2) {{ hostvars.monitoring.ansible_host }}"
+
