@@ -44,6 +44,10 @@ server {
                 proxy_set_header X-Real-IP $remote_addr;
         }
 
+        location /status {
+                stub_status;
+        }
+
         # pass PHP scripts to FastCGI server
         #
         #location ~ \.php$ {

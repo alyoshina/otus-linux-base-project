@@ -1,17 +1,26 @@
 ---
-# tasks file for monitoring
+#tasks file for monitoring
 
 - import_tasks: prometheus.yml
   when: inventory_hostname == 'monitoring'
 
 - import_tasks: prometheus_exporter.yml
 
-- import_tasks: mysqld-exporter.yml
+- import_tasks: mysqld-exporter-config.yml
   when: "'mysqld' in prometheus_exporter_types"
+
+- import_tasks: nginx-exporter-config.yml
+  when: "'nginx' in prometheus_exporter_types"
 
 - import_tasks: grafana.yml
   when: inventory_hostname == 'monitoring'
+
   
+
+
+
+
+
 # - name: test0
 #   debug:
 #     msg: "1) {{ inventory_hostname }}"

@@ -1,0 +1,15 @@
+---
+
+- name: Create prometheus-nginx-exporter.service
+  ansible.builtin.template:
+    src: ./templates/prometheus-nginx-exporter.service.j2
+    dest: /lib/systemd/system/prometheus-nginx-exporter.service
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Restart prometheus-nginx-exporter.service, in all cases, also issue daemon-reload to pick up config changes
+  systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: prometheus-nginx-exporter.service
