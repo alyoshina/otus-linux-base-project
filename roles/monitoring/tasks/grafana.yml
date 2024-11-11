@@ -25,6 +25,70 @@
     daemon_reload: true
     name: grafana-server
 
+
+- name: create prometheus datasource
+  grafana_datasource:
+    name: prometheus
+    ds_type: prometheus
+    ds_url: http://localhost:9090
+    url_username: "admin"
+    url_password: "admin"
+    url: http://localhost:3000
+    access: proxy
+    uid: "de3ebdbwzvocgf"
+    org_id: 1
+    additional_json_data:
+      httpMethod: "POST"
+    tls_skip_verify: true
+    
+    # additional_json_data:
+    #   httpHeaderName1: "Authorization"
+    # additional_secure_json_data:
+    #   httpHeaderValue1: "Bearer ihavenogroot"
+
+- name: Copy dashboard
+  copy:
+    src: "files/{{ item }}"
+    dest: "/tmp/{{ item }}"
+  loop:
+    - "mysql_overview_dashboard.json"
+    - "nginx_dashboard.json"
+    - "node_exporter_full_dashboard.json"
+
+# - name: Export dashboard
+#   grafana_dashboard:
+#     grafana_url: http://localhost:3000
+#     grafana_user: "admin"
+#     grafana_password: "admin" #"{{ grafana_password }}"
+#     org_id: 1
+#     state: export
+#     uid: "de3ebdbwzvocgf"
+#     path: "/tmp/{{ item }}"
+#   loop:
+#     - "node_dashboard.json"
+#     - "mysql_overview_dashboard.json"
+#     - "nginx_dashboard.json"
+
+- name: Import dashboard
+  grafana_dashboard:
+    grafana_url: http://localhost:3000
+    grafana_user: "admin"
+    grafana_password: "admin" #"{{ grafana_password }}"
+    org_id: 1
+    state: present
+ #   folder: Dashboards
+ #   uid: "MQWgroiiz"
+    path: "/tmp/{{ item }}"
+  loop:
+    - "mysql_overview_dashboard.json"
+    - "nginx_dashboard.json"
+    - "node_exporter_full_dashboard.json"
+
+
+
+
+
+
 # - name: Remove default prometheus configuration
 #   file:
 #     name: '{{ item }}'

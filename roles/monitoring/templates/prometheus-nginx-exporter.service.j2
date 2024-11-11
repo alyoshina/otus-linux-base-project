@@ -8,7 +8,7 @@ Restart=on-failure
 User=prometheus
 EnvironmentFile=/etc/default/prometheus-nginx-exporter
 ExecStart=/usr/bin/prometheus-nginx-exporter \
---nginx.scrape-uri=http://localhost:80/status \
+--nginx.scrape-uri=http://localhost:80/nginx_status \
 --web.listen-address=0.0.0.0:9102
 
 [Install]

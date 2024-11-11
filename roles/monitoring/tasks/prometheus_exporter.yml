@@ -5,3 +5,16 @@
     name: "prometheus-{{ item }}-exporter"
     state: present
   loop: "{{ prometheus_exporter_types }}"
+
+- import_tasks: mysqld-exporter-config.yml
+  when: "'mysqld' in prometheus_exporter_types"
+
+- import_tasks: nginx-exporter-config.yml
+  when: "'nginx' in prometheus_exporter_types"
+
+- name: "Restart prometheus-exporter {{ inventory_hostname }} {{ prometheus_exporter_types }}"
+  systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: "prometheus-{{ item }}-exporter"
+  loop: "{{ prometheus_exporter_types }}"
