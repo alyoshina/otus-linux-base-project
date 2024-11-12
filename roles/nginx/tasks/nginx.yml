@@ -26,3 +26,7 @@
   notify: Restart nginx
   tags: nginx
 
+- name: Wait for nginx port to become open on the host
+  wait_for:
+    port: 80
+    delay: 10

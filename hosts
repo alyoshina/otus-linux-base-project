@@ -5,7 +5,7 @@ ungrouped:
     mysql_master:
       ansible_host: 192.168.0.25
     mysql_slave:
-      ansible_host: 192.168.0.26
+      ansible_host: 192.168.0.27
     logging:
       ansible_host: 192.168.0.27
     monitoring:
@@ -13,7 +13,7 @@ ungrouped:
     apache1:
       ansible_host: 192.168.0.25
     apache2:
-      ansible_host: 192.168.0.26
+      ansible_host: 192.168.0.27
 
 group_apache:
   hosts:
@@ -24,7 +24,7 @@ group_prometheus_node_exporter:
   hosts:
     nginx:
     mysql_master:
-    mysql_slave:
+ #   mysql_slave:
     monitoring:
 
 group_prometheus_mysql_exporter:
