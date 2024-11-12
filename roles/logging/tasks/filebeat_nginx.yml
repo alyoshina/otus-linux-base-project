@@ -3,13 +3,13 @@
 - name: Copy elk-8.9-deb
   copy:
     src: "/home/liliya/elk-8.9-deb/{{ item }}"
-    dest: "/tmp/elk-8.9-deb/{{ item }}"
+    dest: "/tmp/{{ item }}"
   loop:
     - filebeat-8.9.1-amd64.deb
 
 - name: Install elk-8.9-deb package
   apt:
-    deb: "/tmp/elk-8.9-deb/{{ item }}"
+    deb: "/tmp/{{ item }}"
   loop:
     - filebeat-8.9.1-amd64.deb
     # - heartbeat-8.9.1-amd64.deb

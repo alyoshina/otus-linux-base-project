@@ -5,3 +5,4 @@
   when: inventory_hostname == 'nginx'
   
 - import_tasks: elasticsearch.yml
+  when: inventory_hostname == 'monitoring'
