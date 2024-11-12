@@ -24,6 +24,14 @@
     enabled: true
     daemon_reload: true
     name: grafana-server
+  
+- name: Wait for grafana, prometheus port to become open on the host
+  wait_for:
+    port: "{{ item }}"
+    delay: 10
+  loop:
+   - 3000
+   - 9090
 
 - name: create prometheus datasource
   grafana_datasource:

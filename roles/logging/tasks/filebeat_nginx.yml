@@ -30,3 +30,13 @@
     mode: 0644
     owner: root
     group: root
+
+
+- name: Restart filebeat service
+  systemd_service:
+    state: restarted
+    enabled: true
+    daemon_reload: true
+    name: "{{ item }}"
+  loop:
+    - filebeat
