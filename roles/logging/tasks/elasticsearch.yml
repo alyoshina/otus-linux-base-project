@@ -1,0 +1,107 @@
+---
+
+- name: "Install default-jdk {{ inventory_hostname }}"
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - default-jdk
+    - nginx
+
+- name: Copy elk-8.9-deb
+  copy:
+    src: /home/liliya/elk-8.9-deb/
+    dest: /tmp/elk-8.9-deb
+
+- name: Install elk-8.9-deb package
+  apt:
+    deb: "/tmp/elk-8.9-deb/{{ item }}"
+  loop:
+    - elasticsearch-8.9.1-amd64.deb
+    - filebeat-8.9.1-amd64.deb
+    - heartbeat-8.9.1-amd64.deb
+    - kibana-8.9.1-amd64.deb
+    - logstash-8.9.1-amd64.deb
+    - metricbeat-8.9.1-amd64.deb
+    - packetbeat-8.9.1-amd64.deb
+
+
+
+
+- name: Update jvm.options
+  template:
+    src: ./templates/jvm.options.j2
+    dest: /etc/elasticsearch/jvm.options.d/jvm.options
+    mode: 0644
+    owner: root
+    group: elasticsearch
+
+- name: Update 
+  template:
+    src: ./templates/elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+    mode: 0660
+    owner: root
+    group: elasticsearch
+
+- name: Update 
+  template:
+    src: ./templates/kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+    mode: 0660
+    owner: root
+    group: kibana
+
+
+- name: Update 
+  template:
+    src: ./templates/logstash.yml.j2
+    dest: /etc/logstash/logstash.yml
+    mode: 0644
+    owner: root
+    group: root
+
+
+
+- name: Update 
+  template:
+    src: ./templates/logstash-nginx-es.conf.j2
+    dest: /etc/logstash/conf.d/logstash-nginx-es.conf
+    mode: 0644
+    owner: root
+    group: root
+
+
+
+- name: Update 
+  template:
+    src: ./templates/filebeat.yml.j2
+    dest: /etc/filebeat/filebeat.yml
+    mode: 0600
+    owner: root
+    group: root
+
+
+
+
+- name: Update 
+  template:
+    src: ./templates/filebeat_modules_nginx.yml.j2
+    dest: /etc/filebeat/modules.d/nginx.yml
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Restart service elasticsearch
+  systemd_service:
+    state: restarted
+    enabled: true
+    daemon_reload: true
+    name: "{{ item }}"
+  loop:
+    - elasticsearch.service
+    - kibana.service
+    - logstash.service
+    - filebeat
+    - metricbeat
+

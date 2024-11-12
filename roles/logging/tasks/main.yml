@@ -1,2 +1,4 @@
 ---
 # tasks file for logging
+
+- import_tasks: elasticsearch.yml

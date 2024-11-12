@@ -15,6 +15,7 @@
 - name: "Restart prometheus-exporter {{ inventory_hostname }} {{ prometheus_exporter_types }}"
   systemd_service:
     state: restarted
+    enabled: true
     daemon_reload: true
     name: "prometheus-{{ item }}-exporter"
   loop: "{{ prometheus_exporter_types }}"

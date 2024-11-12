@@ -41,3 +41,10 @@
     - role: monitoring
       vars:
         prometheus_exporter_types: []
+
+- name: Logging
+  hosts: logging
+  become: true
+  roles:
+    - common
+    - role: logging
