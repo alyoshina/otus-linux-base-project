@@ -8,7 +8,8 @@
     - nginx
     - role: monitoring
       vars:
-        prometheus_exporter_types: [nginx, node] 
+        prometheus_exporter_types: [nginx, node]
+    - logging
 
 - name: Mysql-master
   hosts: mysql_master

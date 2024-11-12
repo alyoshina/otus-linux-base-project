@@ -6,7 +6,7 @@
     state: present
   loop:
     - default-jdk
-    - nginx
+#    - nginx
 
 - name: Copy elk-8.9-deb
   copy:
@@ -18,15 +18,12 @@
     deb: "/tmp/elk-8.9-deb/{{ item }}"
   loop:
     - elasticsearch-8.9.1-amd64.deb
-    - filebeat-8.9.1-amd64.deb
+    #- filebeat-8.9.1-amd64.deb
     - heartbeat-8.9.1-amd64.deb
     - kibana-8.9.1-amd64.deb
     - logstash-8.9.1-amd64.deb
     - metricbeat-8.9.1-amd64.deb
     - packetbeat-8.9.1-amd64.deb
-
-
-
 
 - name: Update jvm.options
   template:
@@ -36,7 +33,7 @@
     owner: root
     group: elasticsearch
 
-- name: Update 
+- name: Update elasticsearch.yml
   template:
     src: ./templates/elasticsearch.yml.j2
     dest: /etc/elasticsearch/elasticsearch.yml
@@ -44,7 +41,7 @@
     owner: root
     group: elasticsearch
 
-- name: Update 
+- name: Update kibana.yml
   template:
     src: ./templates/kibana.yml.j2
     dest: /etc/kibana/kibana.yml
@@ -52,8 +49,7 @@
     owner: root
     group: kibana
 
-
-- name: Update 
+- name: Update logstash.yml
   template:
     src: ./templates/logstash.yml.j2
     dest: /etc/logstash/logstash.yml
@@ -61,9 +57,7 @@
     owner: root
     group: root
 
-
-
-- name: Update 
+- name: Update logstash-nginx-es.conf
   template:
     src: ./templates/logstash-nginx-es.conf.j2
     dest: /etc/logstash/conf.d/logstash-nginx-es.conf
@@ -71,28 +65,23 @@
     owner: root
     group: root
 
+# + - name: Update 
+#   template:
+#     src: ./templates/filebeat.yml.j2
+#     dest: /etc/filebeat/filebeat.yml
+#     mode: 0600
+#     owner: root
+#     group: root
 
+# + - name: Update 
+#   template:
+#     src: ./templates/filebeat_modules_nginx.yml.j2
+#     dest: /etc/filebeat/modules.d/nginx.yml
+#     mode: 0644
+#     owner: root
+#     group: root
 
-- name: Update 
-  template:
-    src: ./templates/filebeat.yml.j2
-    dest: /etc/filebeat/filebeat.yml
-    mode: 0600
-    owner: root
-    group: root
-
-
-
-
-- name: Update 
-  template:
-    src: ./templates/filebeat_modules_nginx.yml.j2
-    dest: /etc/filebeat/modules.d/nginx.yml
-    mode: 0644
-    owner: root
-    group: root
-
-- name: Restart service elasticsearch
+- name: Restart elk service
   systemd_service:
     state: restarted
     enabled: true
@@ -104,4 +93,14 @@
     - logstash.service
     - filebeat
     - metricbeat
+
+- name: Copy kibana dashboard
+  copy:
+    src: ./files/kibana_nginx_dashboard_export.ndjson
+    dest: /tmp/kibana_nginx_dashboard_export.ndjson
+
+- name: Import kibana dashboard
+  shell: "curl -k \
+    -X POST http://192.168.0.27:5601/api/saved_objects/_import?createNewCopies=true \
+    -H 'kbn-xsrf: true' --form file=@/tmp/kibana_nginx_dashboard_export.ndjson"
 

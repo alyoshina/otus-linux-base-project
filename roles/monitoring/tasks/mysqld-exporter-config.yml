@@ -15,9 +15,3 @@
     mode: 0644
     owner: root
     group: root
-
-# - name: Restart prometheus-mysqld-exporter.service, in all cases, also issue daemon-reload to pick up config changes
-#   systemd_service:
-#     state: restarted
-#     daemon_reload: true
-#     name: prometheus-mysqld-exporter.service

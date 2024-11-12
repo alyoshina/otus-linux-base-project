@@ -1,4 +1,7 @@
 ---
 # tasks file for logging
 
+- import_tasks: filebeat_nginx.yml
+  when: inventory_hostname == 'nginx'
+  
 - import_tasks: elasticsearch.yml

@@ -1,0 +1,32 @@
+---
+
+- name: Copy elk-8.9-deb
+  copy:
+    src: "/home/liliya/elk-8.9-deb/{{ item }}"
+    dest: "/tmp/elk-8.9-deb/{{ item }}"
+  loop:
+    - filebeat-8.9.1-amd64.deb
+
+- name: Install elk-8.9-deb package
+  apt:
+    deb: "/tmp/elk-8.9-deb/{{ item }}"
+  loop:
+    - filebeat-8.9.1-amd64.deb
+    # - heartbeat-8.9.1-amd64.deb
+    # - packetbeat-8.9.1-amd64.deb
+
+- name: Update filebeat.yml
+  template:
+    src: ./templates/filebeat.yml.j2
+    dest: /etc/filebeat/filebeat.yml
+    mode: 0600
+    owner: root
+    group: root
+
+- name: Update filebeat/modules.d/nginx.yml
+  template:
+    src: ./templates/filebeat_modules_nginx.yml.j2
+    dest: /etc/filebeat/modules.d/nginx.yml
+    mode: 0644
+    owner: root
+    group: root

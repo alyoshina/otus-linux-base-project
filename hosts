@@ -23,8 +23,8 @@ group_apache:
 group_prometheus_node_exporter:
   hosts:
     nginx:
- #   apache1:
- #   apache2:
+    mysql_master:
+    mysql_slave:
     monitoring:
 
 group_prometheus_mysql_exporter:
