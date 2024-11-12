@@ -1,13 +1,13 @@
 ---
 
-# - name: "Install grafana {{ inventory_hostname }}"
-#   apt:
-#     name: "{{ item }}"
-#     state: present
-#   loop:
-#     - adduser
-#     - libfontconfig1
-#     - musl
+- name: "Install grafana {{ inventory_hostname }}"
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - adduser
+    - libfontconfig1
+    - musl
 
 - name: Copy grafana_11.22.2
   copy:
@@ -15,15 +15,15 @@
     src: /home/liliya/grafana_11.2.2_amd64-224190-c9d6aa.deb
     dest: /tmp/grafana_11.2.2_amd64-224190-c9d6aa.deb
 
-# - name: Install a grafana.deb package
-#   apt:
-#     deb: /tmp/grafana_11.2.2_amd64-224190-c9d6aa.deb
+- name: Install a grafana.deb package
+  apt:
+    deb: /tmp/grafana_11.2.2_amd64-224190-c9d6aa.deb
 
-# - name: Restart service grafana, in all cases, also issue daemon-reload to pick up config changes
-#   systemd_service:
-#     state: restarted
-#     daemon_reload: true
-#     name: grafana-server
+- name: Restart service grafana, in all cases, also issue daemon-reload to pick up config changes
+  systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: grafana-server
 
 
 - name: create prometheus datasource
