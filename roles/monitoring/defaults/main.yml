@@ -11,4 +11,4 @@ prometheus_exporter_types: []
 prometheus_port: 9090
 grafana_port: 3000
 grafana_user: "admin"
-grafana_password: "admin"
+#grafana_password:

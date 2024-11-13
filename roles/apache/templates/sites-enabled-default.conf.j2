@@ -1,5 +1,5 @@
-Listen 4444
-<VirtualHost *:4444>
+Listen {{ apache_port }}
+<VirtualHost *:{{ apache_port }}>
 	ServerAdmin webmaster@localhost
 	DocumentRoot /var/www/html{{ play_hosts.index(inventory_hostname) }}
 

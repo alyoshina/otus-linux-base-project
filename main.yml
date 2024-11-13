@@ -1,6 +1,6 @@
 ---
 
-- name: MAIN
+- name: Nginx
   hosts: nginx
   become: true
   # vars_files:
@@ -24,7 +24,6 @@
         prometheus_exporter_types: [mysqld, node] 
     - apache
 
-
 - name: Mysql-slave
   hosts: mysql_slave
   become: true
@@ -42,8 +41,6 @@
   roles:
     - common
     - role: monitoring
-      vars:
-        prometheus_exporter_types: []
 
 - name: Logging
   hosts: logging
