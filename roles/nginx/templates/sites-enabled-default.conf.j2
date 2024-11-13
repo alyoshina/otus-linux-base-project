@@ -1,15 +1,15 @@
 
 upstream backend {
 {% for host in groups['group_apache'] %}
-        server {{ hostvars[host]['ansible_host'] }}:4444;
+        server {{ hostvars[host]['ansible_host'] }}:{{ apache_port }};
 {% endfor %}
 }
 
 # Default server configuration
 #
 server {
-        listen 80;
-        listen [::]:80;
+        listen {{ nginx_port }};
+        listen [::]:{{ nginx_port }};
 
         # SSL configuration
         #

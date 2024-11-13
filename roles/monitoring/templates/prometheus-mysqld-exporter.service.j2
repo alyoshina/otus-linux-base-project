@@ -24,7 +24,7 @@ ExecStart=/usr/bin/prometheus-mysqld-exporter \
 --collect.perf_schema.indexiowaits \
 --collect.perf_schema.tableiowaits \
 --collect.slave_status \
---web.listen-address=0.0.0.0:9101
+--web.listen-address=0.0.0.0:{{ mysql_exporter_port }}
 
 [Install]
 WantedBy=multi-user.target

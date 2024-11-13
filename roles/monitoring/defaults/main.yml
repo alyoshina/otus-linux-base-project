@@ -1,2 +1,14 @@
 ---
 # defaults file for monitoring
+
+node_exporter_port: 9100
+mysql_exporter_port: 9101
+nginx_exporter_port: 9102
+
+# mysqld, nginx, node
+prometheus_exporter_types: []
+
+prometheus_port: 9090
+grafana_port: 3000
+grafana_user: "admin"
+grafana_password: "admin"

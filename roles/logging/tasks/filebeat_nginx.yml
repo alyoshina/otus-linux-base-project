@@ -4,6 +4,7 @@
   copy:
     src: "/home/liliya/elk-8.9-deb/{{ item }}"
     dest: "/tmp/{{ item }}"
+    force: no
   loop:
     - filebeat-8.9.1-amd64.deb
 

@@ -5057,8 +5057,8 @@
         "allFormat": "glob",
         "current": {
           "selected": false,
-          "text": "192.168.0.25:9101",
-          "value": "192.168.0.25:9101"
+          "text": "{{ hostvars['mysql_master']['ansible_host'] }}:{{ mysql_exporter_port }}",
+          "value": "{{ hostvars['mysql_master']['ansible_host'] }}:{{ mysql_exporter_port }}"
         },
         "datasource": {
           "type": "prometheus",

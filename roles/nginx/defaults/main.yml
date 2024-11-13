@@ -1,2 +1,5 @@
 ---
 # defaults file for nginx
+
+nginx_port: 80
+apache_port: 4444

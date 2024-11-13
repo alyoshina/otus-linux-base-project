@@ -6,19 +6,18 @@
     state: present
   loop:
     - default-jdk
-#    - nginx
 
 - name: Copy elk-8.9-deb
   copy:
     src: /home/liliya/elk-8.9-deb/
     dest: /tmp/elk-8.9-deb
+    force: no
 
 - name: Install elk-8.9-deb package
   apt:
     deb: "/tmp/elk-8.9-deb/{{ item }}"
   loop:
     - elasticsearch-8.9.1-amd64.deb
-    #- filebeat-8.9.1-amd64.deb
     - heartbeat-8.9.1-amd64.deb
     - kibana-8.9.1-amd64.deb
     - logstash-8.9.1-amd64.deb
@@ -65,22 +64,6 @@
     owner: root
     group: root
 
-# # + - name: Update 
-# #   template:
-# #     src: ./templates/filebeat.yml.j2
-# #     dest: /etc/filebeat/filebeat.yml
-# #     mode: 0600
-# #     owner: root
-# #     group: root
-
-# # + - name: Update 
-# #   template:
-# #     src: ./templates/filebeat_modules_nginx.yml.j2
-# #     dest: /etc/filebeat/modules.d/nginx.yml
-# #     mode: 0644
-# #     owner: root
-# #     group: root
-
 - name: Restart elk service
   systemd_service:
     state: restarted
@@ -95,21 +78,20 @@
     - elasticsearch.service
     - kibana.service
     - logstash.service
- #   - filebeat
     - metricbeat
 
 - name: Copy kibana dashboard
   copy:
-    src: ./files/kibana_nginx_dashboard_export.ndjson
+    src: kibana_nginx_dashboard_export.ndjson
     dest: /tmp/kibana_nginx_dashboard_export.ndjson
 
 - name: Wait for kibana port to become open on the host
   wait_for:
-    port: 5601
+    port: "{{ kibana_port }}"
     delay: 10
 
 - name: Import kibana dashboard
   shell: "curl -k \
-    -X POST http://{{ hostvars['monitoring']['ansible_host'] }}:5601/api/saved_objects/_import?createNewCopies=true \
+    -X POST http://{{ hostvars['monitoring']['ansible_host'] }}:{{ kibana_port }}/api/saved_objects/_import?createNewCopies=true \
     -H 'kbn-xsrf: true' --form file=@/tmp/kibana_nginx_dashboard_export.ndjson"
 

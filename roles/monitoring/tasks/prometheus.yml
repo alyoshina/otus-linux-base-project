@@ -9,7 +9,7 @@
 
 - name: Remove default prometheus configuration
   file:
-    name: '{{ item }}'
+    name: "{{ item }}"
     state: absent
   loop:
     - /etc/prometheus/prometheus.yml

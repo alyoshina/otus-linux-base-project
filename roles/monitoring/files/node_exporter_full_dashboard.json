@@ -23789,8 +23789,8 @@
       {
         "current": {
           "selected": false,
-          "text": "192.168.0.24:9100",
-          "value": "192.168.0.24:9100"
+          "text": "{{ hostvars['nginx']['ansible_host'] }}:{{ node_exporter_port }}",
+          "value": "{{ hostvars['nginx']['ansible_host'] }}:{{ node_exporter_port }}"
         },
         "datasource": {
           "type": "prometheus",

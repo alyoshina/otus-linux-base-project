@@ -1,9 +1,10 @@
 ---
 
-
 - name: MAIN
   hosts: nginx
   become: true
+  # vars_files:
+  #   - ./vars.yml
   roles:
     - common
     - nginx
