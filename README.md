@@ -7,6 +7,8 @@
  - система логирования ELK (elasticSearch, logstash, kibana), сбор данных filebeat
  - база данных MySQL, настроена репликация master-slave
 
+![alt text](https://github.com/alyoshina/otus-linux-base-project/blob/work/example.pdf?raw=true)
+
 
 ## Подготовка
 
