@@ -1,4 +1,12 @@
-# otus-linux-base-project
+# Автоматизация развертывания веб стенда с системой мониторинга и централизованным сбором логов
+
+Для автоматизация развертывания веб стенда используется ansible \
+В проекте используется:
+ - система мониторинга prometheus + grafana, сбор метрик организован через node_exporter, mysqld_exporter, nginx_exporter
+ - система логирования ELK (elasticSearch, logstash, kibana), сбор данных Filebeat
+ - балансировка нагрузки
+ - база данных MySQL, настроена репликация master-slave
+ - архитектура FrontEnd/BackEnd web-сервера с балансировкой нагрузки. FrontEnd - nginx, BackEnd - apache
 
 ## Подготовка
 
@@ -44,12 +52,3 @@ git clone git@github.com:alyoshina/otus-linux-base-project.git
 ansible-playbook main.yml --extra-vars "@vars.yml" -kK --ask-vault-pass
 ```
 
-
-
-
-
-
-
-
-
-  version: 2
