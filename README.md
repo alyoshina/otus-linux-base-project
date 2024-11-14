@@ -9,7 +9,7 @@
 
 ![ScreenShot](/example.pdf)
 
-<img src="/example.pdf" width="100" height="100" />
+<img src="/example.pdf" width="1000" height="1000" />
 
 
 ## Подготовка
