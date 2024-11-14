@@ -18,4 +18,8 @@
     enabled: true
     daemon_reload: true
     name: "prometheus-{{ item }}-exporter"
+  register: servDetails
+  until: servDetails.status.ActiveState == "active"
+  delay: 10
+  retries: 30
   loop: "{{ prometheus_exporter_types }}"

@@ -26,6 +26,17 @@
   notify: Restart nginx
   tags: nginx
 
+- name: "Restart nginx {{ inventory_hostname }} "
+  systemd_service:
+    state: restarted
+    enabled: true
+    daemon_reload: true
+    name: nginx
+  register: servDetails
+  until: servDetails.status.ActiveState == "active"
+  delay: 10
+  retries: 30
+
 - name: Wait for nginx port to become open on the host
   wait_for:
     port: "{{ nginx_port }}"
