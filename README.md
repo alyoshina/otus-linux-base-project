@@ -1,12 +1,12 @@
-# Автоматизация развертывания веб стенда с системой мониторинга и централизованным сбором логов
+# Автоматизация развертывания web-стенда с системой мониторинга и централизованным сбором логов
 
-Для автоматизация развертывания веб стенда используется ansible \
-В проекте используется:
+Для автоматизация развертывания web-стенда используется ansible \
+В проекте:
+ - архитектура frontEnd/backEnd web-сервера с балансировкой нагрузки. FrontEnd - nginx, backEnd - apache
  - система мониторинга prometheus + grafana, сбор метрик организован через node_exporter, mysqld_exporter, nginx_exporter
- - система логирования ELK (elasticSearch, logstash, kibana), сбор данных Filebeat
- - балансировка нагрузки
+ - система логирования ELK (elasticSearch, logstash, kibana), сбор данных filebeat
  - база данных MySQL, настроена репликация master-slave
- - архитектура FrontEnd/BackEnd web-сервера с балансировкой нагрузки. FrontEnd - nginx, BackEnd - apache
+
 
 ## Подготовка
 
@@ -17,10 +17,10 @@ network:
   ethernets:
     enp0s3:
       dhcp4: false
-      addresses: [192.168.0.24/24]
+      addresses: [<static_ip>/24]
       routes:
         - to: default
-          via: 192.168.0.1
+          via: <route_ip>
       nameservers:
         addresses:
           - 8.8.8.8
@@ -37,10 +37,12 @@ ssh-copy-id <user>@<ip>
 Устанолен ansible версии 10.6.0 \
 Команды для установки последней версии ansible
 ```
+
 ```
 В github добавлен открытый ssh-ключ
 
 -------------------------------
+
 ## Восстановление
 
 Получение копии git-репозитория:
