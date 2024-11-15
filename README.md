@@ -7,9 +7,8 @@
  - система логирования ELK (elasticSearch, logstash, kibana), сбор данных filebeat
  - база данных MySQL, настроена репликация master-slave
 
-![ScreenShot](/example.pdf)
 
-<img src="/example.png?raw=true"/>
+<img src="/project_example.png?raw=true"/>
 
 
 ## Подготовка
