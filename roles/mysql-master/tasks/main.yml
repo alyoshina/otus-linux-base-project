@@ -1,6 +1,7 @@
 ---
 # tasks file for mysql-master
-- name: Mysql-master
-  import_tasks: create-repl-user.yml
-  import_tasks: cron_mysqldump.yml
+
+- import_tasks: create-repl-user.yml
+- import_tasks: cron_mysqldump.yml
+
 
