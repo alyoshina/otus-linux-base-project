@@ -6,45 +6,45 @@
   # vars_files:
   #   - ./vars.yml
   roles:
-    - common
+    #- common
     - nginx
-    # - role: monitoring
-    #   vars:
-    #     prometheus_exporter_types: [nginx, node]
-    # - logging
+    - role: monitoring
+      vars:
+        prometheus_exporter_types: [nginx, node]
+    - logging
 
 - name: Mysql-master
   hosts: mysql_master
   become: true
   roles:
-    - common
+    #- common
     - mysql-master
-    # - role: monitoring
-    #   vars:
-    #     prometheus_exporter_types: [mysqld, node] 
+    - role: monitoring
+      vars:
+        prometheus_exporter_types: [mysqld, node] 
     - apache
 
 - name: Mysql-slave
   hosts: mysql_slave
   become: true
   roles:
-    - common
-    # - role: monitoring
-    #   vars:
-    #     prometheus_exporter_types: [node] 
+    #- common
+    - role: monitoring
+      vars:
+        prometheus_exporter_types: [node] 
     - apache
     - mysql-slave
 
-# - name: Monitoring
-#   hosts: monitoring
-#   become: true
-#   roles:
-#     - common
-#     - role: monitoring
+- name: Monitoring
+  hosts: monitoring
+  become: true
+  roles:
+    #- common
+    - role: monitoring
 
-# - name: Logging
-#   hosts: logging
-#   become: true
-#   roles:
-#     - common
-#     - role: logging
+- name: Logging
+  hosts: logging
+  become: true
+  roles:
+    #- common
+    - role: logging
