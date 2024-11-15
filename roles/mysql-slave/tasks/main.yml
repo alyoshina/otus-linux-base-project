@@ -3,4 +3,3 @@
 
 - name: Mysql-slave
   import_tasks: change-replica-source.yml
-  import_tasks: cron_mysqldump.yml

@@ -4,7 +4,7 @@
   ansible.builtin.template:
     src: ./templates/mysqldump.sh.j2
     dest: /etc/mysql/mysqldump.sh
-    mode: 0644
+    mode: 0755
     owner: root
     group: root
 

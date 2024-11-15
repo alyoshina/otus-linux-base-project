@@ -1,7 +1,7 @@
 #!/bin/bash
 
-MYSQL='mysql --skip-column-names'
-mysql -e "stop slave;"
+MYSQL='mysql --skip-column-names -u{{ mysql_root_user }} -p{{ mysql_root_password }}'
+mysql -u{{ mysql_root_user }} -p{{ mysql_root_password }} -e "stop slave;"
 for db in $(${MYSQL} -e "show databases where \`Database\` not in ('mysql', 'performance_schema', 'sys', 'information_schema')"); do
 	dump_time=$(date +"%Y%m%d")
     mkdir ${dump_time}
@@ -10,5 +10,5 @@ for db in $(${MYSQL} -e "show databases where \`Database\` not in ('mysql', 'per
 		/usr/bin/mysqldump ${db} ${t} | gzip -1 > ${dump_time}/${db}/${t}TESTDUMP.gz
 	done
 done
-mysql -e "start slave;"
+mysql -u{{ mysql_root_user }} -p{{ mysql_root_password }} -e "start slave;"
 exit 0

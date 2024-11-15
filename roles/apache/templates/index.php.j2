@@ -1,0 +1,18 @@
+
+<html>
+<head>
+<titel> Server </titel>
+</head>
+<body>
+<h1>Hello!</h1>
+<p>This is server {{ inventory_hostname }}</p>
+
+<?php
+echo "TEST PHP IN PHP__";
+$mysqli = new mysqli("localhost", {{ mysql_root_user }}, {{ mysql_root_password }}, "mysql");
+$result = mysqli->query("select * from user");
+printf("Select %d", $result->num_rows);
+echo "END";
+?>
+</body>
+</html>

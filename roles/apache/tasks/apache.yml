@@ -2,9 +2,16 @@
 
 - name: Install apache
   apt:
-    name: apache2
+    name: "{{ item }}"
     state: present
 #  notify: Restart apache
+  loop:
+    - php
+    - php-mysqli
+    - php-mysql
+    - apache2
+    - libapache2-mod-php
+    - 
   tags: apache
 
 - name: Remove default apache configuration
@@ -44,10 +51,20 @@
     owner: root
     group: root
 
+# - name: Add html file
+#   ansible.builtin.template:
+#     src: ./templates/index.html.j2
+#     dest: "/var/www/html{{ play_hosts.index(inventory_hostname) }}/index.html"
+#     mode: 0644
+#     owner: root
+#     group: root
+#   notify: Restart apache
+#   tags: apache
+
 - name: Add html file
   ansible.builtin.template:
-    src: ./templates/index.html.j2
-    dest: "/var/www/html{{ play_hosts.index(inventory_hostname) }}/index.html"
+    src: ./templates/index.php.j2
+    dest: "/var/www/html{{ play_hosts.index(inventory_hostname) }}/index.php"
     mode: 0644
     owner: root
     group: root
