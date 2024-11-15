@@ -10,6 +10,41 @@
 
 <img src="/project_example.png?raw=true"/>
 
+## Требования
+Для запуска playbook требуется root-доступ, используется с параметром «become: yes»
+
+## Переменные
+Доступные переменные перечислены ниже вместе со значениями по умолчанию (см. `defaults/main.yml` в ролях)
+```yaml
+nginx_port: 80
+apache_port: 4444
+```
+
+```yaml
+mysql_daemon: mysql
+dbname: testdb
+mysql_root_user: root
+mysql_root_password: 
+mysql_repl_user: repl
+
+mysqld_exporter_user: mysqld_exporter
+mysqld_exporter_password: 
+```
+
+```yaml
+kibana_port: 5601
+```
+
+```yaml
+prometheus_port: 9090
+node_exporter_port: 9100
+mysql_exporter_port: 9101
+nginx_exporter_port: 9102
+
+grafana_port: 3000
+grafana_user: "admin"
+grafana_password: "admin"
+```
 
 ## Подготовка
 
