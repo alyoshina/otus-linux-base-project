@@ -41,7 +41,10 @@ ssh-copy-id <user>@<ip>
 Устанолен ansible версии 10.6.0 \
 Команды для установки последней версии ansible
 ```
-
+apt update
+apt upgrade -y
+add-apt-repository --yes --update ppa:ansible/ansible
+apt install ansible
 ```
 В github добавлен открытый ssh-ключ
 
