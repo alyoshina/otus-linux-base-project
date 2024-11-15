@@ -9,7 +9,7 @@
 
 - name: Copy elk-8.9-deb
   copy:
-    src: /home/liliya/elk-8.9-deb/
+    src: "{{ elk_deb_dir }}"
     dest: /tmp/elk-8.9-deb
     force: no
 

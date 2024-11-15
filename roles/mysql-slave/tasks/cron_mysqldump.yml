@@ -1,0 +1,20 @@
+---
+
+- name: Copy mysqldump.sh
+  ansible.builtin.template:
+    src: ./templates/mysqldump.sh.j2
+    dest: /etc/mysql/mysqldump.sh
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Cron mysqldump
+  ansible.builtin.cron:
+    name: mysqldump
+    weekday: "*"
+    month: "*"
+    day: "*"
+    hour: "*"
+    minute: "0"
+    user: root
+    job: "/etc/mysql/mysqldump.sh"
