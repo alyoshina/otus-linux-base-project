@@ -45,6 +45,10 @@ grafana_port: 3000
 grafana_user: "admin"
 grafana_password: "admin"
 ```
+```yaml
+elk_deb_dir: /home/liliya/elk-8.9-deb/
+grafana_deb_path: /home/liliya/grafana_11.2.2_amd64-224190-c9d6aa.deb
+```
 
 ## Подготовка
 
