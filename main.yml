@@ -1,24 +1,24 @@
 ---
 
-# - name: Nginx
-#   hosts: nginx
-#   become: true
-#   # vars_files:
-#   #   - ./vars.yml
-#   roles:
-#     - common
-#     - nginx
-#     - role: monitoring
-#       vars:
-#         prometheus_exporter_types: [nginx, node]
-#     - logging
+- name: Nginx
+  hosts: nginx
+  become: true
+  # vars_files:
+  #   - ./vars.yml
+  roles:
+    - common
+    - nginx
+    # - role: monitoring
+    #   vars:
+    #     prometheus_exporter_types: [nginx, node]
+    # - logging
 
 - name: Mysql-master
   hosts: mysql_master
   become: true
   roles:
-    # - common
-    # - mysql-master
+    - common
+    - mysql-master
     # - role: monitoring
     #   vars:
     #     prometheus_exporter_types: [mysqld, node] 
@@ -33,7 +33,7 @@
     #   vars:
     #     prometheus_exporter_types: [node] 
     - apache
-    # - mysql-slave
+    - mysql-slave
 
 # - name: Monitoring
 #   hosts: monitoring

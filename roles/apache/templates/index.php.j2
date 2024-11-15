@@ -8,11 +8,17 @@
 <p>This is server {{ inventory_hostname }}</p>
 
 <?php
-echo "TEST PHP IN PHP__";
-$mysqli = new mysqli("localhost", {{ mysql_root_user }}, {{ mysql_root_password }}, "mysql");
-$result = mysqli->query("select * from user");
-printf("Select %d", $result->num_rows);
-echo "END";
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$mysqli = new mysqli("localhost", "{{ mysql_root_user }}", "{{ mysql_root_password }}", "{{ dbname }}");
+$result = $mysqli->query("select * from test");
+printf("<p>Select %d</p>", $result->num_rows);
+while ($row = $result->fetch_assoc()) {
+    echo "<p>";
+    echo $row['name'];
+    echo $row["old"];
+    echo "</p>";
+}
 ?>
+
 </body>
 </html>
