@@ -21,3 +21,14 @@
     state: present
     #plugin: caching_sha2_password
     priv: "*.*:REPLICATION CLIENT,PROCESS,SELECT"
+
+- name: "Create test user"
+  mysql_user: 
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}" 
+    name: "{{ mysql_tset_user }}"
+    password: "{{ mysql_root_password }}" 
+    host: "%" 
+    state: present
+    plugin: caching_sha2_password
+    priv: "*.*:ALL"

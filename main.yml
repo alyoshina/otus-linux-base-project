@@ -28,7 +28,7 @@
   hosts: mysql_slave
   become: true
   roles:
-    #- common
+    - common
     # - role: monitoring
     #   vars:
     #     prometheus_exporter_types: [node] 

@@ -11,8 +11,19 @@
     - php-mysql
     - apache2
     - libapache2-mod-php
-    - 
   tags: apache
+
+- name: Replase php
+  replace:
+    path: /etc/php/8.1/cli/php.ini
+    regexp: '(\s+);extension=mysqli(\s+.*)?$'
+    replace: '\1extension=mysqli\2'
+
+- name: Replase php
+  replace:
+    path: /etc/php/8.1/cli/php.ini
+    regexp: '(\s+);extension=mysqlnd(\s+.*)?$'
+    replace: '\1extension=mysqlnd\2'
 
 - name: Remove default apache configuration
   file:

@@ -9,7 +9,7 @@
 
 <?php
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-$mysqli = new mysqli("localhost", "{{ mysql_root_user }}", "{{ mysql_root_password }}", "{{ dbname }}");
+$mysqli = new mysqli("{{ hostvars['mysql_master']['ansible_host'] }}", "{{ mysql_tset_user }}", "{{ mysql_root_password }}", "{{ dbname }}");
 $result = $mysqli->query("select * from test");
 printf("<p>Select %d</p>", $result->num_rows);
 while ($row = $result->fetch_assoc()) {
